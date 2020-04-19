@@ -1,0 +1,34 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: order-service
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://127.0.0.1:118/leyou?characterEncoding=UTF-8
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    registry-fetch-interval-seconds: 10
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # mapper-locations: classpath*:mapper/**Mapper.xml
+#rocketmq:
+#  name-server: 127.0.0.1:9876
+ly:
+  worker:
+    workerId: 1
+    dataCenterId: 1
+  pay:
+    wx:
+      appID: wx8397f8696b538317  #公众号id 公司申请的，个人无法申请，暂时使用这个做测试
+      mchID: 1473426802  #商户号id  公司申请的，个人无法申请，暂时使用这个做测试
+      key: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb  # 秘钥  公司申请的，个人无法申请，暂时使用这个做测试
+      notifyurl: http://a31sdsdsef7db.ngrok.io/WeChatPay/WeChatPayNotify  #回调地址
+
+rocketmq:
+  name-server: 127.0.0.1:9876

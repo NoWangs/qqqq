@@ -1,0 +1,88 @@
+POST http://localhost:8081/item/save?name=qqq&price=100
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-02-11T070453.404.json
+
+###
+
+POST http://localhost:8081/item/save?name=qqq
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-02-11T050147.400.json
+
+###
+
+POST http://localhost:8081/item/save?name=qqq
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-02-11T044729.501.json
+
+###
+
+POST http://localhost:8081/item/save?name=qqq
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-02-11T043021.501.txt
+
+###
+
+POST http://localhost:8081/item/save?name=qqq
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-02-11T040927.500.json
+
+###
+
+POST http://localhost:8081/item/save?name=qqq
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-02-11T035806.500.json
+
+###
+
+POST http://localhost:8081/item/save?price=11&name=qqq
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-02-11T035254.202.json
+
+###
+
+POST http://localhost:8081/item/save?price=11&name=qqq
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-02-11T035142.200.json
+
+###
+
+POST http://localhost:8081/item/save?price=11&name=qqq
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-02-11T035140.200.json
+
+###
+
+POST http://localhost:8081/item/save?price=11&name=qqq
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-02-11T035023.200.json
+
+###
+
+POST http://localhost:8081/item/save?id=1&price=11
+Accept: */*
+Cache-Control: no-cache
+
+<> 2020-02-11T035006.200.json
+
+###
+

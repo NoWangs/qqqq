@@ -1,0 +1,26 @@
+server:
+  port: 8092
+spring:
+  application:
+    name: seckill-service
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:118/leyou?characterEncoding=UTF-8
+    username: root
+    password: 123456
+  redis:
+    host: 127.0.0.1
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    registry-fetch-interval-seconds: 5
+#MyBatisPlus
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #输出sql日志
+  # mapper-locations: classpath*:mapper/**Mapper.xml
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: ${spring.application.name}

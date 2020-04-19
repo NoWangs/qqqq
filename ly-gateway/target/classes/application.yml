@@ -1,0 +1,75 @@
+server:
+  port: 10010
+spring:
+  application:
+    name: ly-gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    registry-fetch-interval-seconds: 5
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000 # 熔断超时时长：6000ms
+ribbon:
+  ConnectTimeout: 500 # ribbon链接超时时长
+  ReadTimeout: 2000 # ribbon读取超时时长
+  MaxAutoRetries: 0  # 当前服务重试次数
+  MaxAutoRetriesNextServer: 1 # 切换服务重试次数
+  OkToRetryOnAllOperations: false # 是否对所有的请求方式都重试，只对get请求重试
+zuul:
+  prefix: /api
+  routes:
+    item-service: /item/** # 将商品微服务映射到/item/**
+    upload-service: /upload/** # 将上传图片的微服务映射到/upload/**
+    search-service: /search/** #搜索微服务
+    user-service: /user/** #搜索微服务
+    auth-service: /auth/** #搜索微服务
+    cart-service: /cart/** #搜索微服务
+    order-service:
+      path: /order/**
+      serviceId: order-service
+      strip-prefix: false
+    seckill-service: /seckillgoods/** #前端秒杀使用
+    seckillManage-service:            #后端秒杀管理使用
+      path: /seckill/**
+      serviceId: seckill-service
+  sensitive-headers: #什么也不写,什么都不敏感
+
+ly:
+  cors:
+    allowedOrigins:
+      - http://manage.leyou.com
+      - http://www.leyou.com
+      - http://127.0.0.1:9001
+    allowedCredentials: true
+    allowedHeaders:
+      - "*"
+    allowedMethods:
+      - GET
+      - POST
+      - DELETE
+      - PUT
+      - OPTIONS
+      - HEAD
+    maxAge: 3600
+    filterPath: "/**"
+
+  jwt:
+    pubKeyPath: E:/xiangmu/leyou118/id_rsa.pub # 公钥地址
+    user:
+      cookieName: LY_TOKEN
+  filter:
+    allowPaths:
+      - /api/auth/login
+      - /api/search
+      - /api/user/register
+      - /api/user/check
+      - /api/user/code
+      - /api/item
+      - /zuul/api/upload
+      - /api/seckill/

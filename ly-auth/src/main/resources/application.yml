@@ -1,0 +1,29 @@
+server:
+  port: 8087
+spring:
+  application:
+    name: auth-service
+  redis:
+    host: 127.0.0.1
+    port: 6379
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    registry-fetch-interval-seconds: 10
+ribbon:
+  ConnectTimeout: 500 # 连接超时时长
+  ReadTimeout: 20000 # 数据通信超时时长
+  MaxAutoRetries: 0 # 当前服务器的重试次数
+  MaxAutoRetriesNextServer: 1 # 重试多少次服务
+  OkToRetryOnAllOperations: false # 是否对所有的请求方式都重试 GET PUT DELETE POST
+
+ly:
+  jwt:
+    user:
+      expire: 30
+      cookieName: LY_TOKEN
+      cookieDomain: leyou.com
+      minRefreshInterval: 15
+    pubKeyPath: E:/xiangmu/leyou118/id_rsa.pub # 公钥地址
+    priKeyPath: E:/xiangmu/leyou118/id_rsa # 私钥地址

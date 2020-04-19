@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<title>乐优商城--秒杀页面</title>
+	<link rel="icon" href="/assets/img/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="/css/webbase.css" />
+	<link rel="stylesheet" type="text/css" href="/css/widget-jquery.autocomplete.css" />
+	<link rel="stylesheet" type="text/css" href="/css/pages-seckill-index.css" />
+</head>
+<body>
+<div id="itemApp">
+	<!-- 头部栏位 -->
+	<div id="nav-bottom">
+		<ly-top/>
+	</div>
+	<div class="py-container index">
+		<!--banner-->
+		<div class="banner">
+			<img src="/img/_/banner.png" class="img-responsive" alt="">
+		</div>
+
+		<!--商品列表-->
+		<div class="goods-list">
+			<ul class="seckill" id="seckill">
+				<li class="seckill-item" v-for="seckill in seckillList">
+					<div class="pic">
+						<a ><img :src="seckill.skuPic" :alt='seckill.title'  ></a>
+					</div>
+					<div class="intro"><span>{{seckill.title}}</span></div>
+					<div class='price'><b class='sec-price'>￥{{ly.formatPrice(seckill.costPrice)}}</b><b class='ever-price'>￥{{ly.formatPrice(seckill.oldPrice)}}</b></div>
+					<div class='num' v-if="seckill.status!=3">
+						<div>已售{{seckill.saleRate}}%</div>
+						<div class='progress'>
+							<div class='sui-progress progress-danger'><span :style="'width: '+seckill.saleRate+'%;'" class='bar'></span></div>
+						</div>
+						<div>剩余<b class='owned'>{{seckill.stockCount}}</b>件</div>
+					</div>
+					<a class='sui-btn btn-block btn-buy' v-if="seckill.status==1"  target='_blank'>{{seckill.beginTime.substring(11,16)}}开始</a>
+					<a class='sui-btn btn-block btn-buy' v-if="seckill.status==2" :href="'/seckill/'+seckill.id+'.html'" target='_blank'>立即抢购</a>
+					<a class='sui-btn btn-block btn-buy'  v-if="seckill.status==3"  target='_blank'>已结束</a>
+				</li>
+			</ul>
+		</div>
+		<div class="cd-top">
+			<div class="top">
+				<img src="/img/_/gotop.png" />
+				<b>TOP</b>
+			</div>
+			<div class="code" id="code">
+				<span><img src="/img/_/code.png"/></span>
+			</div>
+			<div class="erweima">
+				<img src="/img/_/erweima.jpg" alt="">
+				<s></s>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="/js/vue/vue.js"></script>
+<script src="/js/axios.min.js"></script>
+<script src="/js/common.js"></script>
+
+<script th:inline="javascript">
+	const seckillList = /*[[${seckillList}]]*/ [];
+	seckillList.forEach(seckill => {
+		seckill.saleRate = (((seckill.num-seckill.stockCount)/seckill.num)*100).toFixed(0);
+	});
+</script>
+<script>
+	var itemVm = new Vue({
+		el: "#itemApp",
+		data: {
+			ly,
+			num: 1,
+			seckillList
+		},
+		created() {
+			this.init();			 
+		},
+		methods: {
+			init(){
+				//获取服务端的时间
+				ly.http.get("/seckill/portal/time").then(resp => {
+					// 服务端的时间
+					const lytime = resp.data;
+					this.seckillList.forEach(seckill => {
+						var btime = new Date(seckill.beginTime);
+						var etime = new Date(seckill.endTime);
+						var ntime = new Date(lytime);
+						if(btime < ntime && ntime < etime){
+							seckill.status = 2;
+						}else if(btime > ntime){
+							seckill.status = 1;
+						} else if (etime <ntime ){
+							seckill.status = 3;
+						}
+
+					});
+				})
+			}
+			 
+		},
+		computed: {
+		},
+		components: {
+			lyTop: () => import('/js/pages/top.js')
+	}
+	});
+</script>
+<script type="text/javascript" src="/js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#service").hover(function(){
+			$(".service").show();
+		},function(){
+			$(".service").hide();
+		});
+		$("#shopcar").hover(function(){
+			$("#shopcarlist").show();
+		},function(){
+			$("#shopcarlist").hide();
+		});
+
+	})
+</script>
+<script type="text/javascript" src="/js/plugins/sui/sui.min.js"></script>
+<script type="text/javascript" src="/js/widget/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="/js/widget/nav.js"></script>
+<script type="text/javascript" src="/js/pages/seckill-index.js"></script>
+<script>
+	$(function(){
+		$("#code").hover(function(){
+			$(".erweima").show();
+		},function(){
+			$(".erweima").hide();
+		});
+	})
+</script>
+<!-- 底部栏位 -->
+<!--页面底部，由js动态加载-->
+<div class="clearfix footer"></div>
+<script type="text/javascript">$(".footer").load("/foot.html");</script>
+<!--页面底部END-->
+</body>
+</html>
